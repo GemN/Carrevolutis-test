@@ -2,13 +2,15 @@
  * Created by gem on 30/07/2017.
  */
 
+let createError = require('http-errors')
+
 class FindPrime {
 
     static getName() {
         return "findPrime";
     }
 
-    static isPrime(n) {
+    isPrime(n) {
         if (n < 1) return false;
         for (let i = 2; i < n; ++i) {
             if (n % i == 0) {
@@ -18,16 +20,34 @@ class FindPrime {
         return true;
     }
 
-    static getNextPrime(n) {
+    getNextPrime(n) {
         n++;
-        for (; !FindPrime.isPrime(n); n++);
+        for (; !this.isPrime(n); n++);
         return n;
     }
 
-    static get(req, res) {
+    parse(val) {
+        if (isNaN(val)) {
+            return "Error: " + val + " is not number";
+        }
+        if (val < 0) {
+            return "Error: " + val + " is negative";
+        }
+        if (!(val % 1 === 0)) {
+            return "Error: " + val + " must be a whole number";
+        }
+
+        return false;
+    }
+
+    static get(req, res, next) {
         res.setHeader('Content-Type', 'text/plain');
+        let findPrime = new FindPrime();
         let val = req.query.val == undefined ? 0 : req.query.val;
-        res.end(FindPrime.getNextPrime(val).toString());
+        let errorMsg = findPrime.parse(val);
+        if (errorMsg)
+            return next(createError(400, errorMsg));
+        res.end(findPrime.getNextPrime(val).toString());
     }
 }
 

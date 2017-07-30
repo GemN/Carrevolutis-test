@@ -4,7 +4,8 @@
   "description": "Get the next-prime number",
   "main": "src/index.js",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "http-errors": "^1.6.1"
   },
   "devDependencies": {
     "bunyan": "^1.8.10",
