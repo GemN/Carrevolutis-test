@@ -5,22 +5,27 @@
 import React, { Component } from 'react';
 import Button from '../Button/index';
 import List from '../List/index';
+import RequestError from '../RequestError/index'
 let axios = require('axios');
+let store = require('store');
 
 class FindNextPrime extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {numbers: [], inputNumber: ""};
+        let numbers = store.get('numbers') === undefined ? [] : store.get('numbers').numbers;
+        this.state = {numbers: numbers, inputNumber: "", error: ""};
     }
 
     requestPrimeNumber(val) {
+        this.setState({error: ""});
         axios.get('http://localhost:1515/next-prime?val=' + val).then((response) => {
             let numbers = this.state.numbers.slice();
             numbers.push(response.data);
             this.setState({numbers: numbers});
-        }).catch((response) => {
-
+            store.set('numbers', {numbers: numbers});
+        }).catch((error) => {
+            this.setState({error: "Must be a positive number!"});
         });
     }
 
@@ -35,6 +40,7 @@ class FindNextPrime extends Component {
 
     reset = () => {
         this.setState({numbers: []});
+        store.set('numbers', {numbers: []});
     };
 
     render() {
@@ -46,6 +52,9 @@ class FindNextPrime extends Component {
                 <Button label="Suivant depuis N" onClick={this.searchNextPrimeFromN} />
                 <Button label="Remise à zéro" onClick={this.reset} />
                 <Button label="Suivant" onClick={this.searchNextPrime} />
+                <div>
+                    <RequestError error={this.state.error} />
+                </div>
             </div>
         );
     }

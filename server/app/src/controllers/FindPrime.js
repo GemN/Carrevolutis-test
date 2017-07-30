@@ -41,7 +41,6 @@ class FindPrime {
     }
 
     static get(req, res, next) {
-        res.setHeader('Content-Type', 'text/plain');
         let findPrime = new FindPrime();
         let val = req.query.val == undefined ? 0 : req.query.val;
         let errorMsg = findPrime.parse(val);
