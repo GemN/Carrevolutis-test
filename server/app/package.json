@@ -1,0 +1,29 @@
+{
+  "name": "carrevolutis-server",
+  "version": "0.0.1",
+  "description": "Get the next-prime number",
+  "main": "src/index.js",
+  "dependencies": {
+    "express": "^4.15.3"
+  },
+  "devDependencies": {
+    "bunyan": "^1.8.10",
+    "gulp": "^3.9.1",
+    "gulp-env": "^0.4.0",
+    "gulp-nodemon": "^2.2.1"
+  },
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GemN/Carrevolutis-test.git"
+  },
+  "author": "Geoffrey Merran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GemN/Carrevolutis-test/issues"
+  },
+  "homepage": "https://github.com/GemN/Carrevolutis-test#readme"
+}
